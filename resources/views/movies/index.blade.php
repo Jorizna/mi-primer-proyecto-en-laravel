@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bienvenido a MovieApp</title>
+    <title>Listado de Películas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f4f6f8; }
@@ -16,18 +16,16 @@
         .card h2 { margin:0 0 10px 0; }
         .btn { padding:8px 14px; border-radius:4px; text-decoration:none; font-size:14px; display:inline-block; margin-top:10px; }
         .btn-primary { background:#2563eb; color:white; }
-        .btn-success { background:#16a34a; color:white; }
+        .pagination { margin-top:20px; text-align:center; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Bienvenido a MovieApp</h1>
-    <p>Explora nuestras películas destacadas</p>
+    <h1>Listado de Películas</h1>
     <nav>
         <a href="{{ route('home') }}">Inicio</a>
         <a href="{{ route('movies.create') }}">Crear nueva película</a>
-        <a href="{{ route('movies.index') }}">Ver todas</a>
     </nav>
 </header>
 
@@ -47,7 +45,9 @@
         </div>
     @endforeach
 
-    <a href="{{ route('movies.index') }}" class="btn btn-success">Ver todas las películas</a>
+    <div class="pagination">
+        {{ $movies->links() }}
+    </div>
 
 </div>
 
