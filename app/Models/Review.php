@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Models\Movie;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class Review extends Model
 {
@@ -14,7 +17,7 @@ class Review extends Model
         'user_id',
         'content_id',
         'title',
-        'content',
+        'content', // texto del comentario
     ];
 
     public function user(): BelongsTo
@@ -22,8 +25,13 @@ class Review extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function content(): BelongsTo
+    public function relatedMovie(): BelongsTo
     {
         return $this->belongsTo(Movie::class, 'content_id');
+    }
+
+    public function scopeLatestFirst($query)
+    {
+        return $query->orderBy('created_at', 'desc');
     }
 }

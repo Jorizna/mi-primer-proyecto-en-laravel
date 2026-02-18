@@ -9,6 +9,34 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    public function store(Request $request, Movie $movie)
+    {
+        $request->validate([
+            'score' => 'required|integer|min:1|max:5'
+        ]);
+
+        try {
+
+            $rating = Rating::updateOrCreate(
+                [
+                    'user_id' => auth()->id(),
+                    'content_id' => $movie->id
+                ],
+                [
+                    'score' => $request->score
+                ]
+            );
+
+            $movie->updateAverageRating();
+
+            return back()->with('success', 'Valoración guardada');
+
+        } catch (\Exception $e) {
+
+            return back()->with('error', 'Error al guardar valoración');
+        }
+    }
+
     public function up(): void
     {
         Schema::create('ratings', function (Blueprint $table) {
