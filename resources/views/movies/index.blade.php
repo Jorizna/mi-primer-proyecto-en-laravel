@@ -41,6 +41,9 @@
             <p><strong>Director:</strong> {{ $movie->director }}</p>
             <p><strong>Género:</strong> {{ $movie->genero }}</p>
             <p><strong>Duración:</strong> {{ $movie->duracion ?? 'N/A' }} min</p>
+            @if($movie->imagen)
+                <img src="{{ asset('storage/' . $movie->imagen) }}" width="200">
+            @endif
             <a href="{{ route('movies.show', $movie) }}" class="btn btn-primary">Ver más</a>
         </div>
     @endforeach

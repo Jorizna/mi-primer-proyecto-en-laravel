@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -25,20 +25,32 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
-    public function movies(): HasMany
+    public function movies()
     {
-        return $this->hasMany(Movie::class);
+        return $this->hasMany(\App\Models\Movie::class);
     }
 
-    public function ratings(): HasMany
+    public function ratings()
     {
         return $this->hasMany(Rating::class);
     }
 
-    public function reviews(): HasMany
+    public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    // Helpers de roles
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isUser()
+    {
+        return $this->role === 'user';
     }
 }

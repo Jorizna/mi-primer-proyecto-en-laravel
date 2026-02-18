@@ -5,50 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-use App\Models\Rating;
-use App\Models\Review;
-use App\Models\User;
-
-class Movie extends Model
+class Rating extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'titulo',
-        'director',
-        'año_estreno',
-        'duracion',
-        'genero',
-        'sinopsis',
-        'reparto',
+        'content_id',
+        'score',
     ];
 
     protected $casts = [
-        'duracion' => 'integer',
-        'año_estreno' => 'integer',
+        'score' => 'integer',
     ];
 
+    // Relación con el usuario que hizo la valoración
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function ratings(): HasMany
+    // Relación con el contenido (Movie)
+    public function content(): BelongsTo
     {
-        return $this->hasMany(Rating::class, 'content_id');
-    }
-
-    public function reviews(): HasMany
-    {
-        return $this->hasMany(Review::class, 'content_id');
-    }
-
-    public function updateAverageRating(): float
-    {
-        $average = $this->ratings()->avg('score') ?? 0;
-        return round($average, 2);
+        return $this->belongsTo(Movie::class, 'content_id');
     }
 }
