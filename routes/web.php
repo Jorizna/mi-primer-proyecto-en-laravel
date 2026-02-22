@@ -14,11 +14,6 @@ Route::get('/dashboard', function () {
     return redirect()->route('home');
 })->middleware('auth')->name('dashboard');
 
-// ---------------------------------------------------------------
-// Rutas protegidas — DEBEN ir ANTES de las rutas públicas con
-// parámetro dinámico {movie}, para que /movies/create no sea
-// interceptado por la ruta show /movies/{movie}.
-// ---------------------------------------------------------------
 Route::middleware('auth')->group(function () {
 
     // Perfil

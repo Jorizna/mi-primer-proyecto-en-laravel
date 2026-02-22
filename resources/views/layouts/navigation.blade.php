@@ -1,7 +1,7 @@
 <nav class="app-nav" x-data="{ open: false }">
     <div class="nav-container">
 
-        <a href="{{ route('home') }}" class="nav-brand">&#127916; MovieApp</a>
+        <a href="{{ route('home') }}" class="nav-brand">MovieApp</a>
 
         <div class="nav-links">
             <a href="{{ route('home') }}"

@@ -16,7 +16,7 @@
         <div class="auth-container">
             <div class="auth-card">
                 <div class="auth-header">
-                    <a href="/" class="auth-brand">&#127916; MovieApp</a>
+                    <a href="/" class="auth-brand">MovieApp</a>
                 </div>
                 {{ $slot }}
             </div>

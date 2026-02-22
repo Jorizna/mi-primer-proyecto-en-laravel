@@ -45,7 +45,7 @@
 
         <div class="auth-remember">
             <label class="auth-remember-label">
-                <input type="checkbox" name="remember" style="accent-color:#6366f1;">
+                <input type="checkbox" name="remember" style="accent-color:#111827;">
                 Recuérdame
             </label>
             @if (Route::has('password.request'))

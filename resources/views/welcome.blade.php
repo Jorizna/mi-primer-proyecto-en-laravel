@@ -2,7 +2,7 @@
 
     @guest
         <div class="hero">
-            <h1 class="hero-title">&#127916; MovieApp</h1>
+            <h1 class="hero-title">MovieApp</h1>
             <p class="hero-subtitle">Descubre, valora y comparte tus películas favoritas con la comunidad</p>
             <div class="hero-actions">
                 <a href="{{ route('login') }}" class="btn btn-primary">Iniciar sesión</a>
