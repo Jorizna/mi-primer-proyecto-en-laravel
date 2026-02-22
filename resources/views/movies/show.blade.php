@@ -20,14 +20,9 @@
                     <p><strong>Año de estreno:</strong> {{ $movie->año_estreno }}</p>
                     <p><strong>Duración:</strong> {{ $movie->duracion }} min</p>
                     <p><strong>Género:</strong> {{ $movie->genero }}</p>
-                    <p style="margin-top:1rem;"><strong>Sinopsis:</strong></p>
-                    <p>{{ $movie->sinopsis }}</p>
+                    <p><strong>Sinopsis:</strong> {{ $movie->sinopsis }}</p>
                     <p><strong>Reparto:</strong> {{ $movie->reparto }}</p>
-                    <p style="margin-top:1rem;">
-                        <strong>Valoración promedio:</strong>
-                        {{ $movie->averageRating() ?? 'Sin valoraciones' }}
-                        ({{ $movie->ratings()->count() }} votos)
-                    </p>
+                    <p><strong>Valoración:</strong> {{ $movie->averageRating() ?? 'Sin valoraciones' }} ({{ $movie->ratings()->count() }} votos)</p>
 
                     @auth
                         @if (auth()->id() == $movie->user_id || auth()->user()->is_admin)

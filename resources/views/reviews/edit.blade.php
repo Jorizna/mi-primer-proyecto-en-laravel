@@ -3,7 +3,7 @@
         <a href="{{ route('movies.show', $review->content_id) }}" class="btn btn-secondary" style="margin-bottom:1rem;">Volver a la película</a>
 
         <div class="card">
-            <h2>Editar Comentario</h2>
+            <h2>Editar comentario</h2>
 
             @if ($errors->any())
                 <div class="alert alert-danger">

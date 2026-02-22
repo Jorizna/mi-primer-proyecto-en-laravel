@@ -44,16 +44,6 @@
 .movie-year { font-weight: 400; color: #6b7280; font-size: .9em; }
 .movie-card-actions { margin-top: .75rem; display: flex; gap: .4rem; flex-wrap: wrap; }
 
-/* === Película en fila (Mis películas) === */
-.movie-card-row { display: flex; gap: 1.25rem; align-items: flex-start; flex-wrap: wrap; margin-bottom: 1rem; }
-.movie-row-poster { width: 110px; height: 155px; object-fit: cover; border-radius: .375rem; flex-shrink: 0; }
-.movie-row-placeholder { width: 110px; height: 155px; background: #f3f4f6; border-radius: .375rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: .75rem; text-align: center; }
-.movie-row-body { flex: 1; min-width: 160px; }
-.movie-row-body h2 { margin: 0 0 .4rem; font-size: 1rem; }
-.movie-row-body p  { margin: .2rem 0; color: #4b5563; font-size: .875rem; }
-.movie-row-actions { display: flex; flex-direction: column; gap: .4rem; flex-shrink: 0; }
-.movie-row-actions .btn { text-align: center; }
-
 /* === Welcome header === */
 .welcome-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
 .welcome-header h1 { margin: 0; font-size: 1.5rem; }
@@ -80,9 +70,6 @@
 
 /* === Paginación === */
 .pagination-wrap { margin-top: 1.5rem; }
-
-/* === Perfil === */
-.profile-info p { margin: .4rem 0; }
 
 /* ============================================================
    NAVEGACIÓN PERSONALIZADA
