@@ -25,6 +25,5 @@ class RatingController extends Controller
         );
 
         return back()->with('success', 'Valoración guardada correctamente');
-
     }
 }

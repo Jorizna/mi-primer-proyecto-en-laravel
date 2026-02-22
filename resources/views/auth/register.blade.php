@@ -1,57 +1,82 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Registro - MovieApp</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+<x-guest-layout>
+    <h2 class="auth-title">Crear cuenta</h2>
+    <p class="auth-subtitle">Únete y empieza a descubrir películas</p>
 
-<div class="container mt-5" style="max-width: 500px;">
-
-    <h2 class="mb-4">Registro en MovieApp</h2>
-
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" class="auth-form">
         @csrf
 
-        <div class="mb-3">
-            <label for="name" class="form-label">Nombre completo</label>
-            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                   name="name" value="{{ old('name') }}" required autofocus>
+        <div class="form-group">
+            <label class="form-label" for="name">Nombre completo</label>
+            <input
+                id="name"
+                class="form-control"
+                type="text"
+                name="name"
+                value="{{ old('name') }}"
+                required
+                autofocus
+                autocomplete="name"
+                placeholder="Tu nombre"
+            />
             @error('name')
-            <span class="text-danger">{{ $message }}</span>
+                <p class="form-error">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="email" class="form-label">Correo electrónico</label>
-            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                   name="email" value="{{ old('email') }}" required>
+        <div class="form-group">
+            <label class="form-label" for="email">Correo electrónico</label>
+            <input
+                id="email"
+                class="form-control"
+                type="email"
+                name="email"
+                value="{{ old('email') }}"
+                required
+                autocomplete="username"
+                placeholder="tu@email.com"
+            />
             @error('email')
-            <span class="text-danger">{{ $message }}</span>
+                <p class="form-error">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="password" class="form-label">Contraseña</label>
-            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                   name="password" required>
+        <div class="form-group">
+            <label class="form-label" for="password">Contraseña</label>
+            <input
+                id="password"
+                class="form-control"
+                type="password"
+                name="password"
+                required
+                autocomplete="new-password"
+                placeholder="••••••••"
+            />
             @error('password')
-            <span class="text-danger">{{ $message }}</span>
+                <p class="form-error">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="password_confirmation" class="form-label">Confirmar contraseña</label>
-            <input id="password_confirmation" type="password" class="form-control"
-                   name="password_confirmation" required>
+        <div class="form-group">
+            <label class="form-label" for="password_confirmation">Confirmar contraseña</label>
+            <input
+                id="password_confirmation"
+                class="form-control"
+                type="password"
+                name="password_confirmation"
+                required
+                autocomplete="new-password"
+                placeholder="••••••••"
+            />
+            @error('password_confirmation')
+                <p class="form-error">{{ $message }}</p>
+            @enderror
         </div>
 
-        <button type="submit" class="btn btn-success w-100">Registrarse</button>
+        <button type="submit" class="btn btn-primary auth-submit">Crear cuenta</button>
+
+        <p class="auth-divider">
+            ¿Ya tienes cuenta?
+            <a href="{{ route('login') }}" class="auth-link">Inicia sesión</a>
+        </p>
     </form>
-
-    <p class="mt-3">¿Ya tienes cuenta? <a href="{{ route('login') }}">Inicia sesión aquí</a></p>
-</div>
-
-</body>
-</html>
+</x-guest-layout>

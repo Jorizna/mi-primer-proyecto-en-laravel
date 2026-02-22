@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 
@@ -45,28 +44,24 @@ class MovieController extends Controller
 
     public function show(Movie $movie)
     {
-        return view('movies.show', compact('movie'));
+        $userRating = auth()->check()
+            ? $movie->ratings()->where('user_id', auth()->id())->first()
+            : null;
+        return view('movies.show', compact('movie', 'userRating'));
     }
 
     public function edit(Movie $movie)
     {
-        // Autorización básica
-        if (auth()->id() !== $movie->user_id) {
-            abort(403);
-        }
-
+        $this->authorizeMovie($movie);
         return view('movies.edit', compact('movie'));
     }
 
     public function update(UpdateMovieRequest $request, Movie $movie)
     {
-        if (auth()->id() !== $movie->user_id) {
-            abort(403);
-        }
+        $this->authorizeMovie($movie);
 
         $data = $request->validated();
 
-        // Si hay nueva imagen
         if ($request->hasFile('imagen')) {
             $data['imagen'] = $request->file('imagen')->store('movies', 'public');
         }
@@ -78,9 +73,24 @@ class MovieController extends Controller
 
     public function destroy(Movie $movie)
     {
+        $this->authorizeMovie($movie);
+
         $movie->delete();
 
         return redirect()->route('movies.index')
             ->with('success', 'Película eliminada correctamente');
+    }
+
+    public function mine()
+    {
+        $movies = Movie::where('user_id', auth()->id())->latest()->paginate(15);
+        return view('movies.index', ['movies' => $movies, 'pageTitle' => 'Mis películas']);
+    }
+
+    private function authorizeMovie(Movie $movie)
+    {
+        if (auth()->id() !== $movie->user_id && !auth()->user()->isAdmin()) {
+            abort(403);
+        }
     }
 }

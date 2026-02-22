@@ -29,9 +29,4 @@ class Rating extends Model
     {
         return $this->belongsTo(Movie::class, 'content_id');
     }
-    public function ratings()
-    {
-        return $this->hasMany(Rating::class);
-    }
-
 }

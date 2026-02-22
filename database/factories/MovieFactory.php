@@ -10,11 +10,11 @@ class MovieFactory extends Factory
 {
     protected $model = Movie::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
-            'user_id' => User::inRandomOrder()->first()->id ?? User::factory(),
-            'titulo' => $this->faker->sentence(3),
+            'user_id' => User::factory(),
+            'titulo' => $this->faker->unique()->sentence(3),
             'director' => $this->faker->name(),
             'año_estreno' => $this->faker->numberBetween(1980, 2024),
             'duracion' => $this->faker->numberBetween(80, 180),

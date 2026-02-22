@@ -6,18 +6,11 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreReviewRequest extends FormRequest
 {
-    /**
-     * Determine si el usuario está autorizado para hacer esta solicitud.
-     */
     public function authorize(): bool
     {
-        // Solo usuarios autenticados pueden enviar comentarios
         return auth()->check();
     }
 
-    /**
-     * Obtener las reglas de validación que se aplican a la solicitud.
-     */
     public function rules(): array
     {
         return [
@@ -26,9 +19,6 @@ class StoreReviewRequest extends FormRequest
         ];
     }
 
-    /**
-     * Mensajes personalizados en español.
-     */
     public function messages(): array
     {
         return [

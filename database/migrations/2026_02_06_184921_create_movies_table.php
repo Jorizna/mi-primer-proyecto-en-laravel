@@ -25,7 +25,6 @@ return new class extends Migration
             $table->integer('duracion')->nullable();
             $table->string('sinopsis')->nullable();
             $table->string('reparto')->nullable();
-            $table->decimal('average_rating', 3, 2)->default(0);
             $table->timestamps();
         });
     }

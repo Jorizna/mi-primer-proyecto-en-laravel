@@ -1,51 +1,63 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Login - MovieApp</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+<x-guest-layout>
+    <h2 class="auth-title">Iniciar sesión</h2>
+    <p class="auth-subtitle">Accede a tu cuenta para continuar</p>
 
-<div class="container mt-5" style="max-width: 500px;">
-
-    <h2 class="mb-4">Iniciar sesión en MovieApp</h2>
-
-    @if(session('status'))
+    @if (session('status'))
         <div class="alert alert-success">{{ session('status') }}</div>
     @endif
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" class="auth-form">
         @csrf
 
-        <div class="mb-3">
-            <label for="email" class="form-label">Correo electrónico</label>
-            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                   name="email" value="{{ old('email') }}" required autofocus>
+        <div class="form-group">
+            <label class="form-label" for="email">Correo electrónico</label>
+            <input
+                id="email"
+                class="form-control"
+                type="email"
+                name="email"
+                value="{{ old('email') }}"
+                required
+                autofocus
+                autocomplete="username"
+                placeholder="tu@email.com"
+            />
             @error('email')
-            <span class="text-danger">{{ $message }}</span>
+                <p class="form-error">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="password" class="form-label">Contraseña</label>
-            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                   name="password" required>
+        <div class="form-group">
+            <label class="form-label" for="password">Contraseña</label>
+            <input
+                id="password"
+                class="form-control"
+                type="password"
+                name="password"
+                required
+                autocomplete="current-password"
+                placeholder="••••••••"
+            />
             @error('password')
-            <span class="text-danger">{{ $message }}</span>
+                <p class="form-error">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="mb-3 form-check">
-            <input type="checkbox" name="remember" id="remember" class="form-check-input" {{ old('remember') ? 'checked' : '' }}>
-            <label class="form-check-label" for="remember">Recuérdame</label>
+        <div class="auth-remember">
+            <label class="auth-remember-label">
+                <input type="checkbox" name="remember" style="accent-color:#6366f1;">
+                Recuérdame
+            </label>
+            @if (Route::has('password.request'))
+                <a href="{{ route('password.request') }}" class="auth-link">¿Olvidaste tu contraseña?</a>
+            @endif
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        <button type="submit" class="btn btn-primary auth-submit">Entrar</button>
+
+        <p class="auth-divider">
+            ¿No tienes cuenta?
+            <a href="{{ route('register') }}" class="auth-link">Regístrate gratis</a>
+        </p>
     </form>
-
-    <p class="mt-3">¿No tienes cuenta? <a href="{{ route('register') }}">Regístrate aquí</a></p>
-</div>
-
-</body>
-</html>
+</x-guest-layout>

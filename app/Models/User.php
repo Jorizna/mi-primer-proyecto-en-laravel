@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -30,7 +29,7 @@ class User extends Authenticatable
 
     public function movies()
     {
-        return $this->hasMany(\App\Models\Movie::class);
+        return $this->hasMany(Movie::class);
     }
 
     public function ratings()
@@ -43,14 +42,18 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
-    // Helpers de roles
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->role === 'admin';
     }
 
-    public function isUser()
+    public function isUser(): bool
     {
         return $this->role === 'user';
+    }
+
+    public function getIsAdminAttribute(): bool
+    {
+        return $this->role === 'admin';
     }
 }

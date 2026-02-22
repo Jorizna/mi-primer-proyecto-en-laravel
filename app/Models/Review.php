@@ -2,12 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\Movie;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
 
 class Review extends Model
 {
@@ -17,7 +14,7 @@ class Review extends Model
         'user_id',
         'content_id',
         'title',
-        'content', // texto del comentario
+        'content',
     ];
 
     public function user(): BelongsTo
@@ -25,7 +22,7 @@ class Review extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function relatedMovie(): BelongsTo
+    public function movie(): BelongsTo
     {
         return $this->belongsTo(Movie::class, 'content_id');
     }

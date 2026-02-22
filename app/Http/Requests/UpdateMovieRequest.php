@@ -6,12 +6,14 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateMovieRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
-        return auth()->check() && auth()->id() == $this->movie->user_id;
+        return auth()->check() && (
+            auth()->id() == $this->movie->user_id || auth()->user()->isAdmin()
+        );
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'titulo' => 'required|string|max:255',
@@ -25,11 +27,9 @@ class UpdateMovieRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
-            'user_id.required' => 'El usuario es obligatorio.',
-            'user_id.exists'   => 'El usuario seleccionado no existe.',
             'titulo.required'  => 'El título es obligatorio.',
             'titulo.max'       => 'El título no puede superar los 255 caracteres.',
             'director.required'=> 'El director es obligatorio.',

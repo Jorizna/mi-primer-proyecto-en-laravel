@@ -15,7 +15,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
-            // Campo role
             $table->enum('role', ['user', 'admin'])->default('user');
 
             $table->rememberToken();

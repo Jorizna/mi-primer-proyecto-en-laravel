@@ -15,18 +15,13 @@ class RatingSeeder extends Seeder
         $movies = Movie::all();
 
         foreach ($users as $user) {
-            // Elegimos un número aleatorio de películas para que cada usuario valore
-            $moviesToRate = $movies->random(rand(3,5));
+            $moviesToRate = $movies->random(rand(3, 5));
 
             foreach ($moviesToRate as $movie) {
-                // Solo crear rating si no existe
-                if (!Rating::where('user_id', $user->id)->where('content_id', $movie->id)->exists()) {
-                    Rating::create([
-                        'user_id' => $user->id,
-                        'content_id' => $movie->id,
-                        'score' => rand(1,5),
-                    ]);
-                }
+                Rating::firstOrCreate(
+                    ['user_id' => $user->id, 'content_id' => $movie->id],
+                    ['score' => rand(1, 5)]
+                );
             }
         }
     }

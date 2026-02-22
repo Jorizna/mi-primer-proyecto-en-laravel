@@ -11,12 +11,12 @@ class RatingFactory extends Factory
 {
     protected $model = Rating::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
-            'user_id' => User::inRandomOrder()->first()->id, // usuario aleatorio
-            'content_id' => Movie::inRandomOrder()->first()->id, // película aleatoria
-            'score' => $this->faker->numberBetween(1,5), // puntuación entre 1 y 5
+            'user_id' => User::factory(),
+            'content_id' => Movie::factory(),
+            'score' => $this->faker->numberBetween(1, 5),
         ];
     }
 }

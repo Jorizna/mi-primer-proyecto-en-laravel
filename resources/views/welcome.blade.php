@@ -1,113 +1,72 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Bienvenido a MovieApp</title>
-    <style>
-        /* Reset simple */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<x-app-layout>
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f8;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        header {
-            background-color: #1f2937;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin-bottom: 10px;
-            font-size: 2rem;
-        }
-
-        nav a, nav form button {
-            color: #e5e7eb;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
-        }
-
-        nav form button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            font: inherit;
-        }
-
-        nav a:hover, nav form button:hover {
-            text-decoration: underline;
-        }
-
-        main {
-            max-width: 800px;
-            margin: 40px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        main p {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: #2563eb;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #1d4ed8;
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>Bienvenido a MovieApp</h1>
-    <nav>
-        @if (Route::has('login'))
-            @auth
-                <a href="{{ route('movies.index') }}">Películas</a>
-                <a href="{{ route('movies.create') }}">Crear nueva película</a>
-                <a href="{{ route('profile.edit') }}">Perfil</a>
-                <form method="POST" action="{{ route('logout') }}" style="display:inline;">
-                    @csrf
-                    <button type="submit">Cerrar sesión</button>
-                </form>
-            @else
-                <a class="btn" href="{{ route('login') }}">Login</a>
+    @guest
+        <div class="hero">
+            <h1 class="hero-title">&#127916; MovieApp</h1>
+            <p class="hero-subtitle">Descubre, valora y comparte tus películas favoritas con la comunidad</p>
+            <div class="hero-actions">
+                <a href="{{ route('login') }}" class="btn btn-primary">Iniciar sesión</a>
                 @if (Route::has('register'))
-                    <a class="btn" href="{{ route('register') }}">Registro</a>
+                    <a href="{{ route('register') }}" class="btn btn-secondary">Registrarse gratis</a>
                 @endif
+            </div>
+        </div>
+    @endguest
+
+    <div class="page-container">
+
+        <div class="welcome-header">
+            <h1>Últimas películas</h1>
+            @auth
+                <div style="display:flex; gap:.75rem; flex-wrap:wrap;">
+                    <a href="{{ route('movies.create') }}" class="btn btn-primary">+ Añadir película</a>
+                    <a href="{{ route('movies.index') }}" class="btn btn-secondary">Ver todas</a>
+                </div>
             @endauth
+        </div>
+
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-    </nav>
-</header>
 
-<main>
-    <p>No hay películas registradas aún.</p>
-</main>
+        <div class="movies-home-grid">
+            @forelse ($movies as $movie)
+                <div class="card movie-card">
+                    @if ($movie->imagen)
+                        <img src="{{ asset('storage/' . $movie->imagen) }}"
+                             alt="{{ $movie->titulo }}"
+                             class="movie-home-poster">
+                    @else
+                        <div class="movie-home-placeholder">Sin imagen</div>
+                    @endif
+                    <div class="movie-card-body">
+                        <h2>
+                            <a href="{{ route('movies.show', $movie) }}" class="movie-card-title">
+                                {{ $movie->titulo }}
+                            </a>
+                        </h2>
+                        <p>{{ $movie->director }} &middot; {{ $movie->año_estreno }}</p>
+                        <p><strong>Género:</strong> {{ $movie->genero }}</p>
+                        <div style="margin-top:.75rem;">
+                            <a href="{{ route('movies.show', $movie) }}" class="btn btn-primary btn-sm">Ver más</a>
+                            @auth
+                                @if (auth()->id() == $movie->user_id || auth()->user()->is_admin)
+                                    <a href="{{ route('movies.edit', $movie) }}" class="btn btn-warning btn-sm">Editar</a>
+                                @endif
+                            @endauth
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="card" style="grid-column:1/-1; text-align:center; color:#6b7280;">
+                    <p>No hay películas registradas aún.
+                        @auth
+                            <a href="{{ route('movies.create') }}" class="auth-link">¡Añade la primera!</a>
+                        @endauth
+                    </p>
+                </div>
+            @endforelse
+        </div>
 
-</body>
-</html>
-
+    </div>
+</x-app-layout>

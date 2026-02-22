@@ -11,13 +11,13 @@ class ReviewFactory extends Factory
 {
     protected $model = Review::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
-            'user_id' => User::inRandomOrder()->first()->id,
-            'content_id' => Movie::inRandomOrder()->first()->id,
-            'title' => $this->faker->sentence(3), // título breve
-            'content' => $this->faker->paragraph(2), // comentario más largo
+            'user_id' => User::factory(),
+            'content_id' => Movie::factory(),
+            'title' => $this->faker->sentence(3),
+            'content' => $this->faker->paragraph(2),
         ];
     }
 }
